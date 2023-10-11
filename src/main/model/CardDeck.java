@@ -10,6 +10,8 @@ public class CardDeck {
     private int numCorrect;
     private int numTested;
 
+    // EFFECTS: Creates a new CardDeck with empty ArrayLists for allCards and cardsToTest. Sets numTested and numCorrect
+    //          to 0.
     public CardDeck() {
         allCards = new ArrayList<>();
         cardsToTest = new ArrayList<>();
@@ -18,23 +20,27 @@ public class CardDeck {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds the given card to the list of flashcards in the order of addition.
+    // EFFECTS: adds the given card to the list of flashcards (allCards) in the order of addition.
     public void addCard(FlashCard card) {
         allCards.add(card);
     }
 
+    // EFFECTS: returns all the flashcards that have been added to the deck of flashcards
     public List<FlashCard> getAllCards() {
         return allCards;
     }
 
+    // EFFECTS: returns all the cards in cardsToTest, which stores all the cards that the user will be quizzed on
     public List<FlashCard> getCardsToTest() {
         return cardsToTest;
     }
 
+    // EFFECTS: returns the number of cards that the user has gotten right so far
     public int getNumCorrect() {
         return numCorrect;
     }
 
+    // EFFECTS: returns the number of cards the user has been quizzed on
     public int getNumTested() {
         return numTested;
     }
@@ -44,7 +50,7 @@ public class CardDeck {
     //          they were added
     public ArrayList<String> getEnglishWords() {
         ArrayList<String> englishWords = new ArrayList<>();
-        for (FlashCard card: allCards) {
+        for (FlashCard card: cardsToTest) {
             englishWords.add(card.getEnglishWord());
         }
         return englishWords;
@@ -66,9 +72,10 @@ public class CardDeck {
     // EFFECTS: Checks if the given guess is equal to the card of given index. If the given language is English, then
     //          checks if it is equal to the translated word. If the given language is "Translation," then checks if it
     //          is equal to the English word.
-    //          If the guess is correct, then moves the proper flashcard to correctCards.
-    //          Increases the number of cards tested.
+    //          If the guess is correct, then increases numCorrect (number of correct cards) by 1.
+    //          Increases numTested (number of cards tested) by 1.
     public boolean quiz(String guess, String language, int index) {
+        getCardsToTest().get(index).addToPastGuesses(guess);
         if (language.equals("Translation")) {
             if (guess.equals(getEnglishWords().get(index))) {
                 numTested++;
@@ -91,7 +98,7 @@ public class CardDeck {
     }
 
     // MODIFIES: this
-    // EFFECTS: Sets untestedCards to be the cards where the part of speech matches the given part of speech.
+    // EFFECTS: Sets cardsToTest to be the cards where the part of speech matches the given part of speech.
     //          If there are no cards in allCards with the same partOfSpeech, returns false. Else, returns true.
     public boolean filterByPartOfSpeech(String partOfSpeech) {
         ArrayList<FlashCard> eligibleCards = new ArrayList<>();
@@ -108,7 +115,7 @@ public class CardDeck {
     }
 
     // MODIFIES: this
-    // EFFECTS: Resets untestedCards to be allCards and makes correctCards an empty list of FlashCards
+    // EFFECTS: Sets cardsToTest to have all the cards in allCards
     public void resetUntestedCards() {
         cardsToTest = new ArrayList<>();
         for (FlashCard card: allCards) {

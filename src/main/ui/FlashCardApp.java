@@ -64,6 +64,7 @@ public class FlashCardApp {
             System.out.println("There are no cards added to the deck");
             menu();
         } else {
+            cards.resetUntestedCards();
             System.out.println("All words in deck of card: ");
             for (String englishWord : cards.getEnglishWords()) {
                 System.out.println(englishWord);
@@ -154,8 +155,14 @@ public class FlashCardApp {
         if (num > 0) {
             System.out.println("% of questions correct: " + (numCorrect / num) * 100 + "%");
         }
-        System.out.println();
-        System.out.println();
+        System.out.println("All previous guesses per word:");
+        for (FlashCard flashCard: cards.getAllCards()) {
+            System.out.print(flashCard.getEnglishWord() + ": ");
+            for (String guess: flashCard.getPastGuesses()) {
+                System.out.print(guess + ", ");
+            }
+            System.out.println();
+        }
 
         menu();
     }
