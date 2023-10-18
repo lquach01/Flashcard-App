@@ -36,3 +36,5 @@ As a user, I want to:
 - Filter through the cards to only be tested based on the part of speech
 - See the statistics of quizzing, including past guesses and the percentage of questions the user has gotten right
 - See all English words in the deck of flashcards
+- When I open the app, I want to be given the option to load a flashcard deck from file OR make a new one
+- When I close the app, I want to be given the option to save the flashcard deck

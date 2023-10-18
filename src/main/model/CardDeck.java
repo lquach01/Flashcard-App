@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// CardDeck is a deck of cards that contains all flashcards added to the deck, all flashcards to test, the number of
+// cards that were tested and the user got correct, and the number of cards that were tested.
 public class CardDeck {
     private ArrayList<FlashCard> allCards;
     private ArrayList<FlashCard> cardsToTest;

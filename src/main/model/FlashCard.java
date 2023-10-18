@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+// FlashCard is a class that represents a flashcard with an English word, a translation, a part of speech, and a list of
+// past guesses.
 public class FlashCard {
     private String englishWord;
     private String translation;

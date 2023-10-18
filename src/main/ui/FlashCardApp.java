@@ -9,6 +9,7 @@ public class FlashCardApp {
     CardDeck cards;
     Scanner scanner = new Scanner(System.in);
 
+    // EFFECTS: Creates new FlashCardApp
     public FlashCardApp() {
         cards = new CardDeck();
         System.out.println("Welcome to the Language FlashCards :)");
@@ -16,6 +17,8 @@ public class FlashCardApp {
 
     }
 
+    // EFFECTS: Displays a menu of options for the user, including to "add a flashcard," "see all added
+    //          flashcards," "quiz myself," "see statistics," and "quit."
     private void menu() {
         System.out.println("Would you like to:");
         System.out.println("Add a flashcard (Enter 1)");
@@ -43,6 +46,8 @@ public class FlashCardApp {
         }
     }
 
+    // MODIFIES: this, CardDeck
+    // EFFECTS: Adds a flashcard, with given information from the user, to cards
     private void addAFlashCard() {
         System.out.println("What is the English word?");
         String englishWord = scanner.nextLine();
@@ -59,6 +64,8 @@ public class FlashCardApp {
         menu();
     }
 
+    // EFFECTS: CardDeck
+    // EFFECTS: Displays all the English words in the deck of cards
     private void seeAllEnglishWords() {
         if (cards.getAllCards().size() == 0) {
             System.out.println("There are no cards added to the deck");
@@ -73,6 +80,10 @@ public class FlashCardApp {
         }
     }
 
+    // MODIFIES: this, CardDeck
+    // EFFECTS: Provides the user with a list of options, including "quiz all words" (being quizzed on all flashcards in
+    //          cards), "filter by part of speech" (being quizzed on only a certain kind of part of speech), "go back"
+    //          (go back to the manu bar)
     private void quizCenter() {
         System.out.println("Would you like to:");
         System.out.println("Quiz all words (Enter 1)");
@@ -100,7 +111,10 @@ public class FlashCardApp {
         }
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: If cards has no flashcards in it, asks user to add cards before quizzing
+    //          If there are 1+ flashcards in cards, asks user if they want to start with the English word or
+    //          the translation and asks the question.
     private void quiz() {
         if (cards.getCardsToTest().size() == 0) {
             System.out.println("Please add cards before quizzing");
@@ -122,6 +136,10 @@ public class FlashCardApp {
 
     }
 
+    // REQUIRES: Language must be "English" or "Translation"
+    // MODIFIES: this
+    // EFFECTS: Prints the question (the word that matches the given language) and prompts the user for their guess,
+    //          and calls the checkIsRight method to check if the guess is correct
     private void askQuestion(String language) {
         for (int i = 0; i < cards.getCardsToTest().size(); i++) {
             if (language.equals("English")) {
@@ -135,6 +153,8 @@ public class FlashCardApp {
         menu();
     }
 
+    // REQUIRES: index >= 0, language is one of: "English" or "Translation"
+    // EFFECTS: Checks if the guess is correct
     private void checkIsRight(String guess, String language, int index) {
         if (cards.quiz(guess, language, index)) {
             System.out.println("YOU GOT IT");
@@ -144,7 +164,8 @@ public class FlashCardApp {
 
     }
 
-
+    // EFFECTS: Prints the statistics, including the number of cards that the user got correct, the number of cards
+    //          tested, the % of cards the user got correct, and the guesses for each card
     private void seeStats() {
         double numCorrect = cards.getNumCorrect();
         double num = cards.getNumTested();
