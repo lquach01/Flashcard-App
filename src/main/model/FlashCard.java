@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 // FlashCard is a class that represents a flashcard with an English word, a translation, a part of speech, and a list of
 // past guesses.
-public class FlashCard {
+public class FlashCard implements Writable {
     private String englishWord;
     private String translation;
     private String partOfSpeech;
@@ -18,6 +22,16 @@ public class FlashCard {
         this.translation = translation;
         this.partOfSpeech = partOfSpeech;
         this.pastGuesses = new ArrayList<>();
+    }
+
+    // REQUIRES: partOfSpeech must be one of: "noun", "pronoun", "verb", "adjective", "adverb", "article",
+    //           "conjunction", "preposition"
+    // EFFECTS: Creates a flashcard with given English word, translation, part of speech, and ArrayList of pastGuesses
+    public FlashCard(String englishWord, String translation, String partOfSpeech, ArrayList<String> pastGuesses) {
+        this.englishWord = englishWord;
+        this.translation = translation;
+        this.partOfSpeech = partOfSpeech;
+        this.pastGuesses = pastGuesses;
     }
 
     // EFFECTS: Returns the card's englishWord (English word)
@@ -52,15 +66,39 @@ public class FlashCard {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: Changes the flashCard's englishWord to be word
     public void setEnglishWord(String word) {
         this.englishWord = word;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Changes the flashCard's translation to be word
     public void setTranslation(String word) {
         this.translation = word;
     }
 
+    // MODIFIES: this
+    // EFFECTS: Changes the flashCard's part of speech to be newPartOfSpeech
     public void setPartOfSpeech(String newPartOfSpeech) {
         this.partOfSpeech = newPartOfSpeech;
     }
+
+    @Override
+    // EFFECTS: returns things in this flashCard as a JSONObject
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray pastGuessesJson = new JSONArray();
+
+        for (String pastGuess: pastGuesses) {
+            pastGuessesJson.put(pastGuess);
+        }
+
+        json.put("englishWord", englishWord);
+        json.put("translation", translation);
+        json.put("partOfSpeech", partOfSpeech);
+        json.put("pastGuesses", pastGuessesJson);
+        return json;
+    }
+
 }

@@ -1,0 +1,38 @@
+{
+    "numTested": 0,
+    "numCorrect": 0,
+    "cardsToTest": [
+        {
+            "englishWord": "cat",
+            "partOfSpeech": "noun",
+            "translation": "chat",
+            "pastGuesses": [
+                "cat",
+                "wow"
+            ]
+        },
+        {
+            "englishWord": "dog",
+            "partOfSpeech": "noun",
+            "translation": "chien",
+            "pastGuesses": []
+        }
+    ],
+    "allCards": [
+        {
+            "englishWord": "cat",
+            "partOfSpeech": "noun",
+            "translation": "chat",
+            "pastGuesses": [
+                "cat",
+                "wow"
+            ]
+        },
+        {
+            "englishWord": "dog",
+            "partOfSpeech": "noun",
+            "translation": "chien",
+            "pastGuesses": []
+        }
+    ]
+}

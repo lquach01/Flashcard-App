@@ -2,18 +2,29 @@ package ui;
 
 import model.CardDeck;
 import model.FlashCard;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
+// FlashCardApp represents an application that allows users to add flashcards to a card deck, see all added flashcards,
+// quiz themselves, and see their statistics.
 public class FlashCardApp {
+    private static final String JSON_STORE = "./data/cardDeck.json";
     CardDeck cards;
     Scanner scanner = new Scanner(System.in);
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     // EFFECTS: Creates new FlashCardApp
     public FlashCardApp() {
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         cards = new CardDeck();
         System.out.println("Welcome to the Language FlashCards :)");
-        menu();
+        persistenceMenu();
 
     }
 
@@ -26,8 +37,21 @@ public class FlashCardApp {
         System.out.println("Quiz myself! (Enter 3)");
         System.out.println("See statistics (Enter 4)");
         System.out.println("Quit (Enter 5)");
+        System.out.println("Save & Quit (Enter 6)");
         String operation = scanner.nextLine();
 
+        processMenuOperation(operation);
+
+    }
+
+    // EFFECTS: If operation is "1", allows uer to add a flashcard
+    //          If operation is "2", allows uer to see all English words
+    //          If operation is "3", it quizzes the user
+    //          If operation is "4", allows user to see statistics
+    //          If operation is "5", allows uer to quit
+    //          If operation is "6", allows uer to save cards to file and quit
+    //          If operation is none of the strings listed above, prompts user to retry
+    private void processMenuOperation(String operation) {
         while (true) {
             if (operation.equals("1")) {
                 addAFlashCard();
@@ -38,6 +62,9 @@ public class FlashCardApp {
             } else if (operation.equals("4")) {
                 seeStats();
             } else if (operation.equals("5")) {
+                System.exit(0);
+            } else if (operation.equals("6")) {
+                save();
                 System.exit(0);
             } else {
                 System.out.println("That's not an option");
@@ -64,7 +91,7 @@ public class FlashCardApp {
         menu();
     }
 
-    // EFFECTS: CardDeck
+    // MODIFIES: CardDeck
     // EFFECTS: Displays all the English words in the deck of cards
     private void seeAllEnglishWords() {
         if (cards.getAllCards().size() == 0) {
@@ -188,6 +215,52 @@ public class FlashCardApp {
         menu();
     }
 
+    // EFFECTS: provides user with a menu that allows them to choose to load saved cardDeck or create a new cardDeck
+    public void persistenceMenu() {
+        System.out.println("Would you like to:");
+        System.out.println("Load old deck of cards (Enter 1)");
+        System.out.println("Start new card deck (Enter 2)");
+
+        String operation = scanner.nextLine();
+
+        while (true) {
+            if (operation.equals("1")) {
+                //
+                loadCardDeck();
+                menu();
+            } else if (operation.equals("2")) {
+                //
+                menu();
+            } else {
+                System.out.println("That's not an option");
+                persistenceMenu();
+            }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads cards from file with name JSON_STORE
+    private void loadCardDeck() {
+        try {
+            cards = jsonReader.read();
+            System.out.println("Loaded card deck from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: save cards to file with name JSON_STORE
+    private void save() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(cards);
+            jsonWriter.close();
+            System.out.println("Saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
 
 
 }
