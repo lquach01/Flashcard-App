@@ -1,6 +1,7 @@
 package persistence;
 
 import model.CardDeck;
+import model.FlashCard;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -25,11 +26,9 @@ public class JsonReaderTest extends JsonTest{
     void testReaderEmptyCardDeck() {
         JsonReader reader = new JsonReader("./data/testReaderEmptyCardDeck.json");
         try {
-            CardDeck cd = reader.read();
-            assertEquals(0, cd.getAllCards().size());
-            assertEquals(0, cd.getCardsToTest().size());
-            assertEquals(0, cd.getNumTested());
-            assertEquals(0, cd.getNumCorrect());
+            CardDeck cd1 = new CardDeck(new ArrayList<>(), new ArrayList<>(), 0, 0);
+            CardDeck cd2 = reader.read();
+            checkSameCardDeck(cd1, cd2);
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -39,37 +38,19 @@ public class JsonReaderTest extends JsonTest{
     void testReaderGeneralCardDeck() {
         JsonReader reader = new JsonReader("./data/testReaderGeneralCardDeck.json");
         try {
-            CardDeck cd = reader.read();
-            assertEquals(2, cd.getAllCards().size());
-            assertEquals(2, cd.getCardsToTest().size());
-            assertEquals("cat", cd.getAllCards().get(0).getEnglishWord());
-            assertEquals("chat", cd.getAllCards().get(0).getTranslation());
-            assertEquals("noun", cd.getAllCards().get(0).getPartOfSpeech());
+            ArrayList<FlashCard> cards = new ArrayList<>();
+            FlashCard catCard = new FlashCard("cat", "chat", "noun");
+            catCard.addToPastGuesses("cat");
+            catCard.addToPastGuesses("wow");
+            cards.add(catCard);
 
-            assertEquals(2, cd.getAllCards().get(0).getPastGuesses().size());
-            assertEquals("cat", cd.getAllCards().get(0).getPastGuesses().get(0));
-            assertEquals("wow", cd.getAllCards().get(0).getPastGuesses().get(1));
+            cards.add(new FlashCard("dog", "chien", "noun"));
 
-            assertEquals("cat", cd.getCardsToTest().get(0).getEnglishWord());
-            assertEquals("chat", cd.getCardsToTest().get(0).getTranslation());
-            assertEquals("noun", cd.getCardsToTest().get(0).getPartOfSpeech());
+            CardDeck cd1 = new CardDeck(cards, cards, 0, 0);
 
-            assertEquals(2, cd.getCardsToTest().get(0).getPastGuesses().size());
-            assertEquals("cat", cd.getCardsToTest().get(0).getPastGuesses().get(0));
-            assertEquals("wow", cd.getCardsToTest().get(0).getPastGuesses().get(1));
+            CardDeck cd2 = reader.read();
 
-            assertEquals("dog", cd.getAllCards().get(1).getEnglishWord());
-            assertEquals("chien", cd.getAllCards().get(1).getTranslation());
-            assertEquals("noun", cd.getAllCards().get(1).getPartOfSpeech());
-            assertEquals(new ArrayList<String>(), cd.getAllCards().get(1).getPastGuesses());
-
-            assertEquals("dog", cd.getCardsToTest().get(1).getEnglishWord());
-            assertEquals("chien", cd.getCardsToTest().get(1).getTranslation());
-            assertEquals("noun", cd.getCardsToTest().get(1).getPartOfSpeech());
-            assertEquals(new ArrayList<String>(), cd.getCardsToTest().get(1).getPastGuesses());
-
-            assertEquals(0, cd.getNumTested());
-            assertEquals(0, cd.getNumCorrect());
+            checkSameCardDeck(cd1, cd2);
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

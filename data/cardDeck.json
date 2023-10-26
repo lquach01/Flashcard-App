@@ -1,38 +1,30 @@
 {
-    "numTested": 3,
-    "numCorrect": 2,
-    "cardsToTest": [
-        {
-            "englishWord": "cat",
-            "partOfSpeech": "noun",
-            "translation": "chat",
-            "pastGuesses": [
-                "chat",
-                "cat"
-            ]
-        },
-        {
-            "englishWord": "dog",
-            "partOfSpeech": "noun",
-            "translation": "chien",
-            "pastGuesses": ["chien"]
-        }
-    ],
+    "numTested": 1,
+    "numCorrect": 1,
+    "cardsToTest": [{
+        "englishWord": "happy",
+        "partOfSpeech": "adjective",
+        "translation": "joyeux",
+        "pastGuesses": ["joyeux"]
+    }],
     "allCards": [
         {
-            "englishWord": "cat",
-            "partOfSpeech": "noun",
-            "translation": "chat",
-            "pastGuesses": [
-                "chat",
-                "cat"
-            ]
+            "englishWord": "happy",
+            "partOfSpeech": "adjective",
+            "translation": "joyeux",
+            "pastGuesses": ["joyeux"]
         },
         {
-            "englishWord": "dog",
+            "englishWord": "2",
+            "partOfSpeech": "idk",
+            "translation": "deux",
+            "pastGuesses": []
+        },
+        {
+            "englishWord": "",
             "partOfSpeech": "noun",
-            "translation": "chien",
-            "pastGuesses": ["chien"]
+            "translation": "slay",
+            "pastGuesses": []
         }
     ]
 }
