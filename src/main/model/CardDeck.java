@@ -103,6 +103,29 @@ public class CardDeck implements Writable {
         }
     }
 
+    public boolean quiz(String guess, String language, FlashCard fc) {
+        fc.addToPastGuesses(guess);
+        if (language.equals("Translation")) {
+            if (guess.equals(fc.getEnglishWord())) {
+                numTested++;
+                numCorrect++;
+                return true;
+            } else {
+                numTested++;
+                return false;
+            }
+        } else {
+            if (guess.equals(fc.getTranslation())) {
+                numTested++;
+                numCorrect++;
+                return true;
+            } else {
+                numTested++;
+                return false;
+            }
+        }
+    }
+
     // MODIFIES: this
     // EFFECTS: Sets cardsToTest to be the cards where the part of speech matches the given part of speech.
     //          If there are no cards in allCards with the same partOfSpeech, returns false. Else, returns true.

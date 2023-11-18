@@ -1,18 +1,15 @@
 {
-    "numTested": 5,
-    "numCorrect": 5,
-    "cardsToTest": [{
-        "englishWord": "slay",
-        "partOfSpeech": "verb",
-        "translation": "hi",
-        "pastGuesses": ["slay"]
-    }],
-    "allCards": [
+    "numTested": 16,
+    "numCorrect": 13,
+    "cardsToTest": [
         {
             "englishWord": "dog",
             "partOfSpeech": "noun",
             "translation": "chien",
-            "pastGuesses": ["chien"]
+            "pastGuesses": [
+                "chien",
+                "chiat"
+            ]
         },
         {
             "englishWord": "cat",
@@ -24,13 +21,54 @@
             "englishWord": "cat",
             "partOfSpeech": "noun",
             "translation": "chat",
-            "pastGuesses": ["chat"]
+            "pastGuesses": [
+                "chat",
+                "cat"
+            ]
         },
         {
             "englishWord": "slay",
             "partOfSpeech": "verb",
             "translation": "hi",
-            "pastGuesses": ["slay"]
+            "pastGuesses": [
+                "slay",
+                "hi"
+            ]
+        }
+    ],
+    "allCards": [
+        {
+            "englishWord": "dog",
+            "partOfSpeech": "noun",
+            "translation": "chien",
+            "pastGuesses": [
+                "chien",
+                "chiat"
+            ]
+        },
+        {
+            "englishWord": "cat",
+            "partOfSpeech": "noun",
+            "translation": "chat",
+            "pastGuesses": ["chat"]
+        },
+        {
+            "englishWord": "cat",
+            "partOfSpeech": "noun",
+            "translation": "chat",
+            "pastGuesses": [
+                "chat",
+                "cat"
+            ]
+        },
+        {
+            "englishWord": "slay",
+            "partOfSpeech": "verb",
+            "translation": "hi",
+            "pastGuesses": [
+                "slay",
+                "hi"
+            ]
         }
     ]
 }

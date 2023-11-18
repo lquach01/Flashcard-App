@@ -13,26 +13,27 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 // FlashCardApp represents an application that allows users to add flashcards to a card deck, see all added flashcards,
 // quiz themselves, and see their statistics.
 public class FlashCardApp extends JFrame {
     private static final String JSON_STORE = "./data/cardDeck.json";
+    private static final Color BGCOLOR = new Color(220, 234, 247);
+
     CardDeck cards;
-    Scanner scanner = new Scanner(System.in);
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
     private ArrayList<Component> components;
+
 
     // EFFECTS: Creates new FlashCardApp
     public FlashCardApp() {
         super("FlashCard App");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setPreferredSize(new Dimension(800, 650));
-        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13) );
-        ((JPanel) getContentPane()).setBackground(Color.pink);
+        ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
+        ((JPanel) getContentPane()).setBackground(BGCOLOR);
         setLayout(new FlowLayout());
         pack();
 
@@ -50,70 +51,6 @@ public class FlashCardApp extends JFrame {
     }
 
 
-    private void filterByPartOfSpeech() {
-        clearFrame();
-        JLabel askWhatPartOfSpeech = new JLabel("What is the part of speech you want to filter by?");
-        JRadioButton nounButton = new JRadioButton("Noun");
-        JRadioButton pronounButton = new JRadioButton("Pronoun");
-        JRadioButton verbButton = new JRadioButton("Verb");
-        JRadioButton adjectiveButton = new JRadioButton("Adjective");
-        JRadioButton articleButton = new JRadioButton("Article");
-        JRadioButton conjunctionButton = new JRadioButton("Conjunction");
-        JRadioButton prepositionButton = new JRadioButton("Preposition");
-
-        add(askWhatPartOfSpeech);
-        add(nounButton);
-        add(pronounButton);
-        add(verbButton);
-        add(adjectiveButton);
-        add(articleButton);
-        add(conjunctionButton);
-        add(prepositionButton);
-
-        components.add(askWhatPartOfSpeech);
-        components.add(nounButton);
-        components.add(pronounButton);
-        components.add(verbButton);
-        components.add(adjectiveButton);
-        components.add(articleButton);
-        components.add(conjunctionButton);
-        components.add(prepositionButton);
-
-        JButton submitButton = new JButton("Submit");
-        add(submitButton);
-        components.add(submitButton);
-        pack();
-        submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String partOfSpeech;
-                if (nounButton.isSelected()) {
-                    partOfSpeech = "noun";
-                } else if (pronounButton.isSelected()) {
-                    partOfSpeech = "pronoun";
-                } else if (verbButton.isSelected()) {
-                    partOfSpeech = "verb";
-                } else if (adjectiveButton.isSelected()) {
-                    partOfSpeech = "adjective";
-                } else if (articleButton.isSelected()) {
-                    partOfSpeech = "article";
-                } else if (conjunctionButton.isSelected()) {
-                    partOfSpeech = "conjunction";
-                } else {
-                    partOfSpeech = "preposition";
-                }
-                if (cards.filterByPartOfSpeech(partOfSpeech)) {
-                    quiz();
-                } else {
-                    JLabel warning = new
-                            JLabel("Sorry, there are no cards that match the selected part(s) of speech");
-                    add(warning);
-                    components.add(warning);
-                    pack();
-                }
-            }
-        });
-    }
 
     // MODIFIES: this
     // EFFECTS: If cards has no flashcards in it, asks user to add cards before quizzing
@@ -122,40 +59,47 @@ public class FlashCardApp extends JFrame {
     private void quiz() {
         clearFrame();
         if (cards.getCardsToTest().size() == 0) {
-            // System.out.println("Please add cards before quizzing");
             JLabel noCardsWarning = new JLabel("Please add cards before quizzing");
             add(noCardsWarning);
             components.add(noCardsWarning);
         } else {
-            JLabel welcome = new JLabel("Welcome to the quiz");
-            JLabel startWithWhatLabel =
-                    new JLabel("Which would you like to start with?");
-            JButton startWithEnglish = new JButton("English");
-            JButton startWithTranslation = new JButton("Translation");
-
-            startWithEnglish.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    askQuestion("English");
-                }
-            });
-            startWithTranslation.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    askQuestion("Translation");
-                }
-            });
-            add(welcome);
-            add(startWithWhatLabel);
-            add(startWithEnglish);
-            add(startWithTranslation);
-
-            components.add(welcome);
-            components.add(startWithEnglish);
-            components.add(startWithWhatLabel);
-            components.add(startWithTranslation);
+            makeLanguagesPanel();
         }
         pack();
+    }
+
+    private void makeLanguagesPanel() {
+        JPanel panel = new JPanel(new GridLayout(4,1));
+        panel.add(new JLabel("Welcome to the quiz"));
+        panel.add(new JLabel("Which would you like to start with?"));
+        JPanel languagesPanel = makeLanguageButtonPanel();
+        panel.add(languagesPanel);
+
+        languagesPanel.setBackground(BGCOLOR);
+        panel.setBackground(BGCOLOR);
+        add(panel);
+        components.add(panel);
+    }
+
+    private JPanel makeLanguageButtonPanel() {
+        JPanel languagesPanel = new JPanel(new GridLayout(1, 2));
+        JButton startWithEnglish = new JButton("English");
+        JButton startWithTranslation = new JButton("Translation");
+        startWithEnglish.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                askQuestion("English");
+            }
+        });
+        startWithTranslation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                askQuestion("Translation");
+            }
+        });
+        languagesPanel.add(startWithEnglish);
+        languagesPanel.add(startWithTranslation);
+        return languagesPanel;
     }
 
     // REQUIRES: Language must be "English" or "Translation"
@@ -164,86 +108,49 @@ public class FlashCardApp extends JFrame {
     //          and calls the checkIsRight method to check if the guess is correct
     private void askQuestion(String language) {
         clearFrame();
+        JPanel questionPanel = new JPanel(new GridLayout(cards.getCardsToTest().size(), 3));
+        JLabel resultLabel = new JLabel();
+        add(resultLabel);
+        components.add(resultLabel);
         for (int i = 0; i < cards.getCardsToTest().size(); i++) {
             if (language.equals("English")) {
-                // System.out.println(cards.getEnglishWords().get(i));
-                JLabel englishWord = new JLabel(cards.getEnglishWords().get(i));
-                add(englishWord);
-                components.add(englishWord);
+                JLabel englishWord = new JLabel(cards.getEnglishWords().get(i) + ":");
+                questionPanel.add(englishWord);
             } else {
-                // System.out.println(cards.getTranslations().get(i));
-                JLabel translation = new JLabel(cards.getTranslations().get(i));
-                add(translation);
-                components.add(translation);
+                JLabel translation = new JLabel(cards.getTranslations().get(i) + ":");
+                questionPanel.add(translation);
             }
-            //String guess = scanner.nextLine();
             JTextField getGuess = new JTextField(20);
-            JButton checkIfCorrect = new JButton("Check if correct");
-            add(getGuess);
-            add(checkIfCorrect);
-            components.add(getGuess);
-            components.add(checkIfCorrect);
+            questionPanel.add(getGuess);
+            questionPanel.setBackground(BGCOLOR);
+            add(questionPanel);
+            addCheckIfCorrectButton(questionPanel, language, i, getGuess, resultLabel);
+            components.add(questionPanel);
             pack();
-            int finalI = i;
-            checkIfCorrect.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    checkIsRight(getGuess.getText(), language, finalI);
-                }
-            });
 
         }
     }
 
-    // REQUIRES: index >= 0, language is one of: "English" or "Translation"
+
+    // REQUIRES: language is one of: "English" or "Translation"
     // EFFECTS: Checks if the guess is correct
-    private void checkIsRight(String guess, String language, int index) {
-        JLabel result;
-        if (cards.quiz(guess, language, index)) {
-            //System.out.println("YOU GOT IT");
-            result = new JLabel("YOU GOT IT");
-        } else {
-            //System.out.println("WRONG");
-            result = new JLabel("WRONG");
-        }
-        add(result);
-        components.add(result);
-        pack();
-    }
-
-    // EFFECTS: Prints the statistics, including the number of cards that the user got correct, the number of cards
-    //          tested, the % of cards the user got correct, and the guesses for each card
-    private void seeStats() {
-        double numCorrect = cards.getNumCorrect();
-        double numAttempts = cards.getNumTested();
-
-        JLabel numCorrectLabel = new JLabel("Number correct: " + numCorrect);
-        JLabel numAttemptsLabel = new JLabel("Number tried: " + numAttempts);
-
-        add(numCorrectLabel);
-        add(numAttemptsLabel);
-        components.add(numAttemptsLabel);
-        components.add(numCorrectLabel);
-        if (numAttempts > 0) {
-            JLabel percentCorrect = new
-                    JLabel("% of questions correct: " + (numCorrect / numAttempts) * 100 + "%");
-            add(percentCorrect);
-            components.add(percentCorrect);
-        }
-        JLabel previousGuessesLabel = new JLabel("All previous guesses per word:");
-        add(previousGuessesLabel);
-        components.add(previousGuessesLabel);
-        for (FlashCard flashCard: cards.getAllCards()) {
-            String guessList = flashCard.getEnglishWord() + ": ";
-            for (String guess: flashCard.getPastGuesses()) {
-                guessList = guessList + guess + ", ";
+    private void addCheckIfCorrectButton(JPanel questionPanel, String language, int i, JTextField getGuess,
+                                         JLabel resultLabel) {
+        JButton checkIfCorrect = new JButton("Check if correct");
+        questionPanel.add(checkIfCorrect);
+        checkIfCorrect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (cards.quiz(getGuess.getText(), language, cards.getCardsToTest().get(i))) {
+                    resultLabel.setText("Previous Guess was Correct!");
+                    checkIfCorrect.setVisible(false);
+                } else {
+                    resultLabel.setText("Previous Guess was False");
+                }
             }
-            JLabel guessesLabel = new JLabel(guessList);
-            add(guessesLabel);
-            components.add(guessesLabel);
-        }
-        pack();
+        });
     }
+
 
     // EFFECTS: provides user with a menu that allows them to choose to load saved cardDeck or create a new cardDeck
     public void persistenceMenu() {
@@ -293,7 +200,6 @@ public class FlashCardApp extends JFrame {
     }
 
     private class LoadOldCardsAction extends AbstractAction {
-
         LoadOldCardsAction() {
             super("load old cards");
         }
@@ -362,6 +268,11 @@ public class FlashCardApp extends JFrame {
     }
 
     private class AddAFlashcardAction extends AbstractAction {
+        JTextField englishWord;
+        JTextField translation;
+        JTextField partOfSpeech;
+        JButton button;
+
         AddAFlashcardAction() {
             super("Add a new flashcard");
         }
@@ -369,54 +280,71 @@ public class FlashCardApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             clearFrame();
+            addTextFields();
+            addButton();
+            pack();
+        }
 
-            JTextField englishWord = new JTextField(30);
-            JTextField translation = new JTextField(30);
-            JTextField partOfSpeech = new JTextField(30);
-            JButton button = new JButton("Save");
+        private void addTextFields() {
+            JPanel panel = new JPanel(new GridLayout(3,2));
+            JLabel englishWordLabel = new JLabel("English Word: ");
+            englishWord = new JTextField(30);
+            JLabel translationLabel = new JLabel("Translation: ");
+            translation = new JTextField(30);
+            JLabel partOfSpeechLabel = new JLabel("Part of Speech: ");
+            partOfSpeech = new JTextField(30);
 
+            panel.add(englishWordLabel);
+            panel.add(englishWord);
+            panel.add(translationLabel);
+            panel.add(translation);
+            panel.add(partOfSpeechLabel);
+            panel.add(partOfSpeech);
 
-            JLabel resultEnglish = new JLabel("WILL BE HERE");
-            JLabel resultTranslation = new JLabel("WILL BE HERE");
-            JLabel resultPartOfSpeech = new JLabel("WILL BE HERE");
-            resultEnglish.setVisible(false);
-            resultTranslation.setVisible(false);
-            resultPartOfSpeech.setVisible(false);
+            panel.setBackground(BGCOLOR);
+            add(panel);
+            components.add(panel);
+        }
 
+        private void addButton() {
+            button = new JButton("Save");
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    String enteredText = englishWord.getText();
+                    String enteredEnglishWord = englishWord.getText();
                     String enteredTranslation = translation.getText();
                     String enteredPartOfSpeech = partOfSpeech.getText();
-                    resultEnglish.setText("English Word: " + enteredText);
-                    resultTranslation.setText("Translation: " + enteredTranslation);
-                    resultPartOfSpeech.setText("Part of Speech: " + enteredPartOfSpeech);
-                    resultEnglish.setVisible(true);
-                    resultTranslation.setVisible(true);
-                    resultPartOfSpeech.setVisible(true);
 
-                    FlashCard flashCard = new FlashCard(enteredText, enteredTranslation, enteredPartOfSpeech);
+                    FlashCard flashCard = new FlashCard(enteredEnglishWord, enteredTranslation, enteredPartOfSpeech);
                     cards.addCard(flashCard);
+
+                    clearFrame();
+                    makeSuccessLabel(enteredEnglishWord, enteredTranslation, enteredPartOfSpeech);
                 }
             });
-
-            add(englishWord);
-            add(translation);
-            add(partOfSpeech);
-            add(resultEnglish);
-            add(resultTranslation);
-            add(resultPartOfSpeech);
             add(button);
-            pack();
-            components.add(englishWord);
-            components.add(translation);
-            components.add(partOfSpeech);
-            components.add(resultEnglish);
-            components.add(resultTranslation);
-            components.add(resultPartOfSpeech);
             components.add(button);
+        }
 
+        private void makeSuccessLabel(String enteredEnglishWord,
+                                      String enteredTranslation,
+                                      String enteredPartOfSpeech) {
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+            JLabel englishLabel = new JLabel("English word: " + enteredEnglishWord);
+            JLabel translationLabel = new JLabel("Translation: " + enteredTranslation);
+            JLabel partOfSpeechLabel = new JLabel("Part of Speech: " + enteredPartOfSpeech);
+
+            panel.add(englishLabel);
+            panel.add(translationLabel);
+            panel.add(partOfSpeechLabel);
+
+            panel.setBackground(BGCOLOR);
+
+            add(panel);
+            components.add(panel);
         }
     }
 
@@ -435,15 +363,27 @@ public class FlashCardApp extends JFrame {
                 add(noCardsAddedLabel);
             } else {
                 cards.resetUntestedCards();
-                JLabel allWordsLabel = new JLabel("All words in deck of card: ");
-                components.add(allWordsLabel);
-                for (String englishWord : cards.getEnglishWords()) {
-                    JLabel englishWordLabel = new JLabel(englishWord);
-                    add(englishWordLabel);
-                    components.add(englishWordLabel);
-                }
+                addAllCards();
             }
             pack();
+        }
+
+        private void addAllCards() {
+            JLabel allWordsLabel = new JLabel("All words in deck of card: ");
+            components.add(allWordsLabel);
+            for (FlashCard card : cards.getAllCards()) {
+                JPanel flashCard = new JPanel();
+                flashCard.setLayout(new BoxLayout(flashCard, BoxLayout.Y_AXIS));
+                JLabel englishWordLabel = new JLabel("English: " + card.getEnglishWord());
+                JLabel translationWord = new JLabel("Translation: " + card.getTranslation());
+                JLabel partOfSpeech = new JLabel("Part of Speech: " + card.getPartOfSpeech());
+                flashCard.add(englishWordLabel);
+                flashCard.add(translationWord);
+                flashCard.add(partOfSpeech);
+                flashCard.setBorder(new EmptyBorder(10, 10, 10, 10));
+                add(flashCard);
+                components.add(flashCard);
+            }
         }
     }
 
@@ -462,17 +402,109 @@ public class FlashCardApp extends JFrame {
     }
 
     private class FilterQuizAction extends AbstractAction {
+        JRadioButton nounButton;
+        JRadioButton pronounButton;
+        JRadioButton verbButton;
+        JRadioButton adjectiveButton;
+        JRadioButton articleButton;
+        JRadioButton conjunctionButton;
+        JRadioButton prepositionButton;
+
         FilterQuizAction() {
             super("Filter by Part Of Speech");
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            filterByPartOfSpeech();
+            clearFrame();
+            addButtonPanel();
+            addButtonsToButtonGroup();
+
+            JButton submitButton = new JButton("Submit");
+            add(submitButton);
+            components.add(submitButton);
+            pack();
+            submitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String partOfSpeech = getPartOfSpeech();
+
+                    if (cards.filterByPartOfSpeech(partOfSpeech)) {
+                        quiz();
+                    } else {
+                        JLabel warning = new
+                                JLabel("Sorry, there are no cards that match the selected part(s) of speech");
+                        add(warning);
+                        components.add(warning);
+                        pack();
+                    }
+                }
+            });
+        }
+
+        private void addButtonPanel() {
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(8,1));
+
+            JLabel askWhatPartOfSpeech = new JLabel("What is the part of speech you want to filter by?");
+            nounButton = new JRadioButton("Noun");
+            pronounButton = new JRadioButton("Pronoun");
+            verbButton = new JRadioButton("Verb");
+            adjectiveButton = new JRadioButton("Adjective");
+            articleButton = new JRadioButton("Article");
+            conjunctionButton = new JRadioButton("Conjunction");
+            prepositionButton = new JRadioButton("Preposition");
+
+            panel.add(askWhatPartOfSpeech);
+            panel.add(nounButton);
+            panel.add(pronounButton);
+            panel.add(verbButton);
+            panel.add(adjectiveButton);
+            panel.add(articleButton);
+            panel.add(conjunctionButton);
+            panel.add(prepositionButton);
+
+            panel.setBackground(BGCOLOR);
+            add(panel);
+            components.add(panel);
+        }
+
+        private void addButtonsToButtonGroup() {
+            ButtonGroup buttonGroup = new ButtonGroup();
+            buttonGroup.add(nounButton);
+            buttonGroup.add(pronounButton);
+            buttonGroup.add(verbButton);
+            buttonGroup.add(adjectiveButton);
+            buttonGroup.add(articleButton);
+            buttonGroup.add(conjunctionButton);
+            buttonGroup.add(prepositionButton);
+
+        }
+
+        private String getPartOfSpeech() {
+            if (nounButton.isSelected()) {
+                return "noun";
+            } else if (pronounButton.isSelected()) {
+                return "pronoun";
+            } else if (verbButton.isSelected()) {
+                return "verb";
+            } else if (adjectiveButton.isSelected()) {
+                return "adjective";
+            } else if (articleButton.isSelected()) {
+                return "article";
+            } else if (conjunctionButton.isSelected()) {
+                return "conjunction";
+            } else {
+                return "preposition";
+            }
         }
     }
 
+    // Displays the statistics, including the number of cards that the user got correct, the number of cards tested, the
+    // % of cards the user got correct, and the guesses for each card
     private class SeeStatisticsAction extends AbstractAction {
+        JPanel panel;
+
         SeeStatisticsAction() {
             super("See statistics");
         }
@@ -480,7 +512,43 @@ public class FlashCardApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             clearFrame();
-            seeStats();
+            panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+
+            double numCorrect = cards.getNumCorrect();
+            double numAttempts = cards.getNumTested();
+
+            JLabel numCorrectLabel = new JLabel("Number of correct guesses: " + numCorrect);
+            JLabel numAttemptsLabel = new JLabel("Number of questions tried: " + numAttempts);
+
+            panel.add(numCorrectLabel);
+            panel.add(numAttemptsLabel);
+
+            if (numAttempts > 0) {
+                JLabel percentCorrect = new
+                        JLabel("% of questions correct: " + (numCorrect / numAttempts) * 100 + "%");
+                panel.add(percentCorrect);
+            }
+            addPreviousGuesses();
+            panel.setBackground(BGCOLOR);
+            add(panel);
+            pack();
+            components.add(panel);
+        }
+
+        private void addPreviousGuesses() {
+            panel.add(new JLabel("____________________________________________________"));
+            JLabel previousGuessesLabel = new JLabel("All previous guesses per word:");
+            panel.add(previousGuessesLabel);
+            for (FlashCard flashCard: cards.getAllCards()) {
+                String guessList = flashCard.getEnglishWord() + ": ";
+                for (String guess: flashCard.getPastGuesses()) {
+                    guessList = guessList + guess + ", ";
+                }
+                JLabel guessesLabel = new JLabel(guessList);
+                add(guessesLabel);
+                panel.add(guessesLabel);
+            }
         }
     }
 
