@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.ImageObserver;
+import java.awt.image.ImageProducer;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -180,23 +182,6 @@ public class FlashCardApp extends JFrame {
             add(loadedConfirmation);
             components.add(loadedConfirmation);
         }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: save cards to file with name JSON_STORE
-    private void save() {
-        String label;
-        try {
-            jsonWriter.open();
-            jsonWriter.write(cards);
-            jsonWriter.close();
-            label = "Saved to " + JSON_STORE;
-        } catch (FileNotFoundException e) {
-            label = "Unable to write to file: " + JSON_STORE;
-        }
-        JLabel returnLabel = new JLabel(label);
-        add(returnLabel);
-        components.add(returnLabel);
     }
 
     private class LoadOldCardsAction extends AbstractAction {
@@ -561,6 +546,32 @@ public class FlashCardApp extends JFrame {
         public void actionPerformed(ActionEvent e) {
             clearFrame();
             save();
+        }
+
+        // MODIFIES: this
+        // EFFECTS: save cards to file with name JSON_STORE
+        private void save() {
+            JPanel finalPanel = new JPanel();
+            finalPanel.setLayout(new BoxLayout(finalPanel, BoxLayout.Y_AXIS));
+            String label;
+            try {
+                jsonWriter.open();
+                jsonWriter.write(cards);
+                jsonWriter.close();
+                label = "Saved to " + JSON_STORE;
+                /*ImageIcon thumbsUp = new ImageIcon("./images/thumbs-up-emoji-1905x2048-yh44rgtn.png");
+                Image imageThumb = thumbsUp.getImage();
+                JLabel image = new JLabel(thumbsUp);
+                setIconImage(imageThumb);*/
+
+            } catch (FileNotFoundException e) {
+                label = "Unable to write to file: " + JSON_STORE;
+            }
+            JLabel returnLabel = new JLabel(label);
+            finalPanel.add(returnLabel);
+            finalPanel.setBackground(BGCOLOR);
+            add(finalPanel);
+            components.add(finalPanel);
         }
     }
 
