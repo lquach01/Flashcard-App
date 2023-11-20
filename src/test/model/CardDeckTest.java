@@ -152,7 +152,7 @@ class CardDeckTest {
     }
 
     // TESTS FOR QUIZ
-    @Test
+    /*@Test
     public void testQuizEnglishWrong() {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
@@ -164,9 +164,23 @@ class CardDeckTest {
         ArrayList<String> previousGuesses = new ArrayList<>();
         previousGuesses.add("chat");
         assertEquals(previousGuesses, cardDog.getPastGuesses());
-    }
+    }*/
 
     @Test
+    public void testQuizEnglishWrong() {
+        testCardDeck.addCard(cardDog);
+        testCardDeck.resetUntestedCards();
+
+        assertFalse(testCardDeck.quiz("chat", "English", cardDog));
+        assertEquals(1, testCardDeck.getNumTested());
+        assertEquals(0, testCardDeck.getNumCorrect());
+
+        ArrayList<String> previousGuesses = new ArrayList<>();
+        previousGuesses.add("chat");
+        assertEquals(previousGuesses, cardDog.getPastGuesses());
+    }
+
+    /*@Test
     public void testQuizEnglishRight() {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
@@ -178,15 +192,14 @@ class CardDeckTest {
         ArrayList<String> previousGuesses = new ArrayList<>();
         previousGuesses.add("chien");
         assertEquals(previousGuesses, cardDog.getPastGuesses());
-    }
+    }*/
 
     @Test
-    public void testQuizEnglishRightSkip1() {
-        testCardDeck.addCard(cardCat);
+    public void testQuizEnglishRight() {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("chien", "English", 1));
+        assertTrue(testCardDeck.quiz("chien", "English", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
@@ -195,12 +208,56 @@ class CardDeckTest {
         assertEquals(previousGuesses, cardDog.getPastGuesses());
     }
 
+//    @Test
+//    public void testQuizEnglishRightSkip1() {
+//        testCardDeck.addCard(cardCat);
+//        testCardDeck.addCard(cardDog);
+//        testCardDeck.resetUntestedCards();
+//
+//        assertTrue(testCardDeck.quiz("chien", "English", 1));
+//        assertEquals(1, testCardDeck.getNumTested());
+//        assertEquals(1, testCardDeck.getNumCorrect());
+//
+//        ArrayList<String> previousGuesses = new ArrayList<>();
+//        previousGuesses.add("chien");
+//        assertEquals(previousGuesses, cardDog.getPastGuesses());
+//    }
+
+    @Test
+    public void testQuizEnglishRightSkip1() {
+        testCardDeck.addCard(cardCat);
+        testCardDeck.addCard(cardDog);
+        testCardDeck.resetUntestedCards();
+
+        assertTrue(testCardDeck.quiz("chien", "English", cardDog));
+        assertEquals(1, testCardDeck.getNumTested());
+        assertEquals(1, testCardDeck.getNumCorrect());
+
+        ArrayList<String> previousGuesses = new ArrayList<>();
+        previousGuesses.add("chien");
+        assertEquals(previousGuesses, cardDog.getPastGuesses());
+    }
+
+//    @Test
+//    public void testQuizTranslationWrong() {
+//        testCardDeck.addCard(cardDog);
+//        testCardDeck.resetUntestedCards();
+//
+//        assertFalse(testCardDeck.quiz("chicken", "Translation", 0));
+//        assertEquals(1, testCardDeck.getNumTested());
+//        assertEquals(0, testCardDeck.getNumCorrect());
+//
+//        ArrayList<String> previousGuesses = new ArrayList<>();
+//        previousGuesses.add("chicken");
+//        assertEquals(previousGuesses, cardDog.getPastGuesses());
+//    }
+
     @Test
     public void testQuizTranslationWrong() {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", 0));
+        assertFalse(testCardDeck.quiz("chicken", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
@@ -209,12 +266,26 @@ class CardDeckTest {
         assertEquals(previousGuesses, cardDog.getPastGuesses());
     }
 
+//    @Test
+//    public void testQuizTranslationRight() {
+//        testCardDeck.addCard(cardDog);
+//        testCardDeck.resetUntestedCards();
+//
+//        assertTrue(testCardDeck.quiz("dog", "Translation", 0));
+//        assertEquals(1, testCardDeck.getNumTested());
+//        assertEquals(1, testCardDeck.getNumCorrect());
+//
+//        ArrayList<String> previousGuesses = new ArrayList<>();
+//        previousGuesses.add("dog");
+//        assertEquals(previousGuesses, cardDog.getPastGuesses());
+//    }
+
     @Test
     public void testQuizTranslationRight() {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("dog", "Translation", 0));
+        assertTrue(testCardDeck.quiz("dog", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
@@ -223,17 +294,41 @@ class CardDeckTest {
         assertEquals(previousGuesses, cardDog.getPastGuesses());
     }
 
+
+//    @Test
+//    public void testQuizMultipleRight() {
+//        testCardDeck.addCard(cardDog);
+//        testCardDeck.addCard(cardCat);
+//        testCardDeck.resetUntestedCards();
+//
+//        assertTrue(testCardDeck.quiz("dog", "Translation", 0));
+//        assertEquals(1, testCardDeck.getNumTested());
+//        assertEquals(1, testCardDeck.getNumCorrect());
+//
+//        assertTrue(testCardDeck.quiz("cat", "Translation", 1));
+//        assertEquals(2, testCardDeck.getNumTested());
+//        assertEquals(2, testCardDeck.getNumCorrect());
+//
+//        ArrayList<String> previousGuessesDog = new ArrayList<>();
+//        previousGuessesDog.add("dog");
+//        assertEquals(previousGuessesDog, cardDog.getPastGuesses());
+//
+//        ArrayList<String> previousGuessesCat = new ArrayList<>();
+//        previousGuessesCat.add("cat");
+//        assertEquals(previousGuessesCat, cardCat.getPastGuesses());
+//    }
+
     @Test
     public void testQuizMultipleRight() {
         testCardDeck.addCard(cardDog);
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("dog", "Translation", 0));
+        assertTrue(testCardDeck.quiz("dog", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
-        assertTrue(testCardDeck.quiz("cat", "Translation", 1));
+        assertTrue(testCardDeck.quiz("cat", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(2, testCardDeck.getNumCorrect());
 
@@ -246,17 +341,41 @@ class CardDeckTest {
         assertEquals(previousGuessesCat, cardCat.getPastGuesses());
     }
 
+//    @Test
+//    public void testQuizMultipleWrong() {
+//        testCardDeck.addCard(cardDog);
+//        testCardDeck.addCard(cardCat);
+//        testCardDeck.resetUntestedCards();
+//
+//        assertFalse(testCardDeck.quiz("chicken", "Translation", 0));
+//        assertEquals(1, testCardDeck.getNumTested());
+//        assertEquals(0, testCardDeck.getNumCorrect());
+//
+//        assertFalse(testCardDeck.quiz("potato", "Translation", 1));
+//        assertEquals(2, testCardDeck.getNumTested());
+//        assertEquals(0, testCardDeck.getNumCorrect());
+//
+//        ArrayList<String> previousGuessesDog = new ArrayList<>();
+//        previousGuessesDog.add("chicken");
+//        assertEquals(previousGuessesDog, cardDog.getPastGuesses());
+//
+//        ArrayList<String> previousGuessesCat = new ArrayList<>();
+//        previousGuessesCat.add("potato");
+//        assertEquals(previousGuessesCat, cardCat.getPastGuesses());
+//
+//    }
+
     @Test
     public void testQuizMultipleWrong() {
         testCardDeck.addCard(cardDog);
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", 0));
+        assertFalse(testCardDeck.quiz("chicken", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
-        assertFalse(testCardDeck.quiz("potato", "Translation", 1));
+        assertFalse(testCardDeck.quiz("potato", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
@@ -270,17 +389,40 @@ class CardDeckTest {
 
     }
 
+//    @Test
+//    public void testQuizMultipleWrongAndRight() {
+//        testCardDeck.addCard(cardDog);
+//        testCardDeck.addCard(cardCat);
+//        testCardDeck.resetUntestedCards();
+//
+//        assertFalse(testCardDeck.quiz("chicken", "Translation", 0));
+//        assertEquals(1, testCardDeck.getNumTested());
+//        assertEquals(0, testCardDeck.getNumCorrect());
+//
+//        assertTrue(testCardDeck.quiz("cat", "Translation", 1));
+//        assertEquals(2, testCardDeck.getNumTested());
+//        assertEquals(1, testCardDeck.getNumCorrect());
+//
+//        ArrayList<String> previousGuessesDog = new ArrayList<>();
+//        previousGuessesDog.add("chicken");
+//        assertEquals(previousGuessesDog, cardDog.getPastGuesses());
+//
+//        ArrayList<String> previousGuessesCat = new ArrayList<>();
+//        previousGuessesCat.add("cat");
+//        assertEquals(previousGuessesCat, cardCat.getPastGuesses());
+//    }
+
     @Test
     public void testQuizMultipleWrongAndRight() {
         testCardDeck.addCard(cardDog);
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", 0));
+        assertFalse(testCardDeck.quiz("chicken", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
-        assertTrue(testCardDeck.quiz("cat", "Translation", 1));
+        assertTrue(testCardDeck.quiz("cat", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
@@ -293,17 +435,39 @@ class CardDeckTest {
         assertEquals(previousGuessesCat, cardCat.getPastGuesses());
     }
 
+//    @Test
+//    public void testQuizMultipleRightAndWrong() {
+//        testCardDeck.addCard(cardDog);
+//        testCardDeck.addCard(cardCat);
+//        testCardDeck.resetUntestedCards();
+//
+//        assertTrue(testCardDeck.quiz("dog", "Translation", 0));
+//        assertEquals(1, testCardDeck.getNumTested());
+//        assertEquals(1, testCardDeck.getNumCorrect());
+//
+//        assertFalse(testCardDeck.quiz("chicken", "Translation", 1));
+//        assertEquals(2, testCardDeck.getNumTested());
+//        assertEquals(1, testCardDeck.getNumCorrect());
+//
+//        ArrayList<String> previousGuessesDog = new ArrayList<>();
+//        previousGuessesDog.add("dog");
+//        assertEquals(previousGuessesDog, cardDog.getPastGuesses());
+//
+//        ArrayList<String> previousGuessesCat = new ArrayList<>();
+//        previousGuessesCat.add("chicken");
+//        assertEquals(previousGuessesCat, cardCat.getPastGuesses());
+//    }
     @Test
     public void testQuizMultipleRightAndWrong() {
         testCardDeck.addCard(cardDog);
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("dog", "Translation", 0));
+        assertTrue(testCardDeck.quiz("dog", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", 1));
+        assertFalse(testCardDeck.quiz("chicken", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 

@@ -80,7 +80,7 @@ public class CardDeck implements Writable {
     //          is equal to the English word.
     //          If the guess is correct, then increases numCorrect (number of correct cards) by 1.
     //          Increases numTested (number of cards tested) by 1.
-    public boolean quiz(String guess, String language, int index) {
+    /*public boolean quiz(String guess, String language, int index) {
         getCardsToTest().get(index).addToPastGuesses(guess);
         if (language.equals("Translation")) {
             if (guess.equals(getEnglishWords().get(index))) {
@@ -101,7 +101,8 @@ public class CardDeck implements Writable {
                 return false;
             }
         }
-    }
+    }*/
+
 
     public boolean quiz(String guess, String language, FlashCard fc) {
         fc.addToPastGuesses(guess);
