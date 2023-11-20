@@ -1,6 +1,6 @@
 {
-    "numTested": 16,
-    "numCorrect": 13,
+    "numTested": 19,
+    "numCorrect": 15,
     "cardsToTest": [
         {
             "englishWord": "dog",
@@ -32,8 +32,15 @@
             "translation": "hi",
             "pastGuesses": [
                 "slay",
-                "hi"
+                "hi",
+                "dn"
             ]
+        },
+        {
+            "englishWord": "hi",
+            "partOfSpeech": "noun",
+            "translation": "bonjour",
+            "pastGuesses": []
         }
     ],
     "allCards": [
@@ -67,8 +74,15 @@
             "translation": "hi",
             "pastGuesses": [
                 "slay",
-                "hi"
+                "hi",
+                "dn"
             ]
+        },
+        {
+            "englishWord": "hi",
+            "partOfSpeech": "noun",
+            "translation": "bonjour",
+            "pastGuesses": []
         }
     ]
 }
