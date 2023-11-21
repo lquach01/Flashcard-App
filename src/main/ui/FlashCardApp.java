@@ -362,7 +362,7 @@ public class FlashCardApp extends JFrame {
     // SeeAllEnglishWordsAction represents the action of displaying all the elements of flashcards in the card deck.
     private class DisplayAllFlashCardsInDeck extends AbstractAction {
         DisplayAllFlashCardsInDeck() {
-            super("See all English words");
+            super("See all cards");
         }
 
         // Effects: If cards has FlashCards, calls addAllCards(). If there are no cards, then displays that there

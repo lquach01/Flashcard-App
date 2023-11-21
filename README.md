@@ -38,3 +38,14 @@ As a user, I want to:
 - See all English words in the deck of flashcards
 - When I open the app, I want to be given the option to load a flashcard deck from file OR make a new one
 - When I close the app, I want to be given the option to save the flashcard deck
+
+
+### Instructions for Grader
+- You can generate the first required action related to the user story "adding multiple Xs to a Y" by selecting "Add a 
+new flashcard" under "Flashcards" in the menu-bar
+- You can generate the second required action related to the user story "adding multiple Xs to a Y" by selecting "See 
+all cards" under "Flashcards" in the menu-bar
+- You can locate my visual component by pressing "Save" in the menu-bar. If the file saves without throwing an error 
+(which it should not throw), a thumbs up image will be displayed.
+- You can save the state of my application by pressing "Save" in the menu-bar
+- You can reload the state of my application by pressing the "Load old cards" button when the application is run

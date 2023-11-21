@@ -73,37 +73,13 @@ public class CardDeck implements Writable {
         return translations;
     }
 
-    // REQUIRES: language is one of: "English" or "Translation", index >= 0
+    // REQUIRES: language is one of: "English" or "Translation"
     // MODIFIES: this
-    // EFFECTS: Checks if the given guess is equal to the card of given index. If the given language is English, then
-    //          checks if it is equal to the translated word. If the given language is "Translation," then checks if it
-    //          is equal to the English word.
+    // EFFECTS: Checks if the given guess is equal to the word of given language of fc.
+    //          If the given language is English, then checks if it is equal to the translated word.
+    //          If the given language is "Translation," then checks if it is equal to the English word.
     //          If the guess is correct, then increases numCorrect (number of correct cards) by 1.
     //          Increases numTested (number of cards tested) by 1.
-    /*public boolean quiz(String guess, String language, int index) {
-        getCardsToTest().get(index).addToPastGuesses(guess);
-        if (language.equals("Translation")) {
-            if (guess.equals(getEnglishWords().get(index))) {
-                numTested++;
-                numCorrect++;
-                return true;
-            } else {
-                numTested++;
-                return false;
-            }
-        } else {
-            if (guess.equals(getTranslations().get(index))) {
-                numTested++;
-                numCorrect++;
-                return true;
-            } else {
-                numTested++;
-                return false;
-            }
-        }
-    }*/
-
-
     public boolean quiz(String guess, String language, FlashCard fc) {
         fc.addToPastGuesses(guess);
         if (language.equals("Translation")) {

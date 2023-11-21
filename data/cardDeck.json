@@ -1,88 +1,24 @@
 {
-    "numTested": 19,
-    "numCorrect": 15,
-    "cardsToTest": [
-        {
-            "englishWord": "dog",
-            "partOfSpeech": "noun",
-            "translation": "chien",
-            "pastGuesses": [
-                "chien",
-                "chiat"
-            ]
-        },
-        {
-            "englishWord": "cat",
-            "partOfSpeech": "noun",
-            "translation": "chat",
-            "pastGuesses": ["chat"]
-        },
-        {
-            "englishWord": "cat",
-            "partOfSpeech": "noun",
-            "translation": "chat",
-            "pastGuesses": [
-                "chat",
-                "cat"
-            ]
-        },
-        {
-            "englishWord": "slay",
-            "partOfSpeech": "verb",
-            "translation": "hi",
-            "pastGuesses": [
-                "slay",
-                "hi",
-                "dn"
-            ]
-        },
-        {
-            "englishWord": "hi",
-            "partOfSpeech": "noun",
-            "translation": "bonjour",
-            "pastGuesses": []
-        }
-    ],
+    "numTested": 1,
+    "numCorrect": 1,
+    "cardsToTest": [{
+        "englishWord": "happy",
+        "partOfSpeech": "adjective",
+        "translation": "joyeux",
+        "pastGuesses": ["joyeux"]
+    }],
     "allCards": [
         {
-            "englishWord": "dog",
-            "partOfSpeech": "noun",
-            "translation": "chien",
-            "pastGuesses": [
-                "chien",
-                "chiat"
-            ]
-        },
-        {
             "englishWord": "cat",
             "partOfSpeech": "noun",
             "translation": "chat",
-            "pastGuesses": ["chat"]
-        },
-        {
-            "englishWord": "cat",
-            "partOfSpeech": "noun",
-            "translation": "chat",
-            "pastGuesses": [
-                "chat",
-                "cat"
-            ]
-        },
-        {
-            "englishWord": "slay",
-            "partOfSpeech": "verb",
-            "translation": "hi",
-            "pastGuesses": [
-                "slay",
-                "hi",
-                "dn"
-            ]
-        },
-        {
-            "englishWord": "hi",
-            "partOfSpeech": "noun",
-            "translation": "bonjour",
             "pastGuesses": []
+        },
+        {
+            "englishWord": "happy",
+            "partOfSpeech": "adjective",
+            "translation": "joyeux",
+            "pastGuesses": ["joyeux"]
         }
     ]
 }
