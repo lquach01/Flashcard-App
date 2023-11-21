@@ -69,6 +69,60 @@ class CardDeckTest {
     }
 
     // TESTS FOR GETTING ENGLISH WORDS
+    @Test
+    public void getEnglishWordsNone() {
+        assertEquals(new ArrayList<String>(), testCardDeck.getEnglishWords());
+    }
+
+    @Test
+    public void getEnglishWordsOne() {
+        testCardDeck.addCard(cardDog);
+
+        testCardDeck.resetUntestedCards();
+
+        assertEquals(1, testCardDeck.getEnglishWords().size());
+        assertEquals("dog", testCardDeck.getEnglishWords().get(0));
+    }
+
+    @Test
+    public void getEnglishWordMult() {
+        testCardDeck.addCard(cardDog);
+        testCardDeck.addCard(cardCat);
+
+        testCardDeck.resetUntestedCards();
+
+        assertEquals(2, testCardDeck.getEnglishWords().size());
+        assertEquals("dog", testCardDeck.getEnglishWords().get(0));
+        assertEquals("cat", testCardDeck.getEnglishWords().get(1));
+    }
+
+    // TESTS FOR GET TRANSLATIONS
+    @Test
+    public void getTranslationsNone() {
+        assertEquals(new ArrayList<String>(), testCardDeck.getTranslations());
+    }
+
+    @Test
+    public void getTranslationsOne() {
+        testCardDeck.addCard(cardDog);
+
+        testCardDeck.resetUntestedCards();
+
+        assertEquals(1, testCardDeck.getTranslations().size());
+        assertEquals("chien", testCardDeck.getTranslations().get(0));
+    }
+
+    @Test
+    public void getTranslationsMult() {
+        testCardDeck.addCard(cardDog);
+        testCardDeck.addCard(cardCat);
+
+        testCardDeck.resetUntestedCards();
+
+        assertEquals(2, testCardDeck.getTranslations().size());
+        assertEquals("chien", testCardDeck.getTranslations().get(0));
+        assertEquals("chat", testCardDeck.getTranslations().get(1));
+    }
 
 
     // TESTS FOR FILTERING CARDS BY PART OF SPEECH
