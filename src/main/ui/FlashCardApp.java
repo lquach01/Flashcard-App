@@ -612,7 +612,9 @@ public class FlashCardApp extends JFrame {
                 ImageIcon thumbsUp = new ImageIcon(path);
                 Image thumbsUp2 = thumbsUp.getImage().getScaledInstance(120, 120,
                         java.awt.Image.SCALE_SMOOTH);
-                add(new JLabel(new ImageIcon(thumbsUp2)));
+                JLabel imageLabel = new JLabel(new ImageIcon(thumbsUp2));
+                add(imageLabel);
+                components.add(imageLabel);
 
             } catch (FileNotFoundException e) {
                 label = "Unable to write to file: " + JSON_STORE;
