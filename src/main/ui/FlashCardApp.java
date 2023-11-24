@@ -603,7 +603,7 @@ public class FlashCardApp extends JFrame {
             JPanel finalPanel = new JPanel();
             finalPanel.setLayout(new BoxLayout(finalPanel, BoxLayout.Y_AXIS));
             String label;
-            String path = "/Users/sydneyquach/IdeaProjects/TestGUI/src/images/thumbs-up-emoji-1905x2048-yh44rgtn.png";
+            String path = "src/images/thumbs-up-emoji-1905x2048-yh44rgtn.png";
             try {
                 jsonWriter.open();
                 jsonWriter.write(cards);
