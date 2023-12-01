@@ -53,12 +53,27 @@ all cards" under "Flashcards" in the menu-bar
 
 ### Phase 4: Task 2
 Tue Nov 28 23:04:45 PST 2023
+
 The card for 'dog' was added to the deck of cards.
+
 Tue Nov 28 23:04:47 PST 2023
+
 All cards in deck of cards were displayed.
+
 Tue Nov 28 23:04:58 PST 2023
+
 Cards were filtered by noun.
+
 Tue Nov 28 23:04:59 PST 2023
+
 Quizzed on English words.
+
 Tue Nov 28 23:05:02 2023
+
 Quizzed on translations.
+
+### Further Refactoring the Project
+To further refactor the project, I would split up the UI into different classes. Currently, FlashCardApp is one class 
+with all code for the GUI, making it difficult to read and follow along with, especially if you are looking at the code
+for the first time. To make it easier to follow along with, I would split the code up into different classes for the 
+different elements of the GUI to organize it.
