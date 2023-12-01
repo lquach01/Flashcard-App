@@ -29,7 +29,8 @@ public class CardDeck implements Writable {
     // EFFECTS: adds the given card to the list of flashcards (allCards) in the order of addition.
     public void addCard(FlashCard card) {
         allCards.add(card);
-        EventLog.getInstance().logEvent(new Event("The card for '" + card.getEnglishWord() + "' was added to the deck of cards."));
+        EventLog.getInstance().logEvent(new Event("The card for '" + card.getEnglishWord()
+                + "' was added to the deck of cards."));
     }
 
     // EFFECTS: returns all the flashcards that have been added to the deck of flashcards
