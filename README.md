@@ -49,3 +49,16 @@ all cards" under "Flashcards" in the menu-bar
 (which it should not throw), a thumbs up image will be displayed.
 - You can save the state of my application by pressing "Save" in the menu-bar
 - You can reload the state of my application by pressing the "Load old cards" button when the application is run
+
+
+### Phase 4: Task 2
+Tue Nov 28 23:04:45 PST 2023
+The card for 'dog' was added to the deck of cards.
+Tue Nov 28 23:04:47 PST 2023
+All cards in deck of cards were displayed.
+Tue Nov 28 23:04:58 PST 2023
+Cards were filtered by noun.
+Tue Nov 28 23:04:59 PST 2023
+Quizzed on English words.
+Tue Nov 28 23:05:02 2023
+Quizzed on translations.

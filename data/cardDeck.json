@@ -1,13 +1,22 @@
 {
-    "numTested": 1,
-    "numCorrect": 1,
-    "cardsToTest": [{
-        "englishWord": "happy",
-        "partOfSpeech": "adjective",
-        "translation": "joyeux",
-        "pastGuesses": ["joyeux"]
-    }],
-    "allCards": [
+    "numTested": 4,
+    "numCorrect": 3,
+    "cardsToTest": [
+        {
+            "englishWord": "cat",
+            "partOfSpeech": "noun",
+            "translation": "chat",
+            "pastGuesses": [
+                "chien",
+                "cat"
+            ]
+        },
+        {
+            "englishWord": "happy",
+            "partOfSpeech": "adjective",
+            "translation": "joyeux",
+            "pastGuesses": ["joyeux"]
+        },
         {
             "englishWord": "cat",
             "partOfSpeech": "noun",
@@ -15,10 +24,51 @@
             "pastGuesses": []
         },
         {
+            "englishWord": "dog",
+            "partOfSpeech": "noun",
+            "translation": "chien",
+            "pastGuesses": []
+        },
+        {
+            "englishWord": "potato",
+            "partOfSpeech": "noun",
+            "translation": "pomme de terre",
+            "pastGuesses": []
+        }
+    ],
+    "allCards": [
+        {
+            "englishWord": "cat",
+            "partOfSpeech": "noun",
+            "translation": "chat",
+            "pastGuesses": [
+                "chien",
+                "cat"
+            ]
+        },
+        {
             "englishWord": "happy",
             "partOfSpeech": "adjective",
             "translation": "joyeux",
             "pastGuesses": ["joyeux"]
+        },
+        {
+            "englishWord": "cat",
+            "partOfSpeech": "noun",
+            "translation": "chat",
+            "pastGuesses": []
+        },
+        {
+            "englishWord": "dog",
+            "partOfSpeech": "noun",
+            "translation": "chien",
+            "pastGuesses": []
+        },
+        {
+            "englishWord": "potato",
+            "partOfSpeech": "noun",
+            "translation": "pomme de terre",
+            "pastGuesses": []
         }
     ]
 }

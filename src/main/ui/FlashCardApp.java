@@ -1,6 +1,8 @@
 package ui;
 
 import model.CardDeck;
+import model.Event;
+import model.EventLog;
 import model.FlashCard;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -10,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -46,11 +50,29 @@ public class FlashCardApp extends JFrame {
         System.out.println("Welcome to the Language FlashCards :)");
         components = new ArrayList<>();
 
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.out.println(printLog(EventLog.getInstance()));
+            }
+        });
+
         persistenceMenu();
 
     }
 
-
+    // MODIFIES: this
+    // EFFECTS: Prints all the events in eventLog
+    private String printLog(EventLog eventLog) {
+        String result = "";
+        for (Event e: eventLog) {
+            String date = e.getDate().toString() + "\n";
+            String thisLine = e.getDescription() + "\n";
+            result = result + date + thisLine;
+        }
+        return result;
+    }
 
     // MODIFIES: this
     // EFFECTS: If cards has no flashcards in it, asks user to add cards before quizzing. Adds warning label to
@@ -119,14 +141,16 @@ public class FlashCardApp extends JFrame {
         JLabel resultLabel = new JLabel();
         add(resultLabel);
         components.add(resultLabel);
+        ArrayList words;
+        if (language.equals("English")) {
+            words = cards.getEnglishWords();
+        } else {
+            words = cards.getTranslations();
+        }
         for (int i = 0; i < cards.getCardsToTest().size(); i++) {
-            if (language.equals("English")) {
-                JLabel englishWord = new JLabel(cards.getEnglishWords().get(i) + ":");
-                questionPanel.add(englishWord);
-            } else {
-                JLabel translation = new JLabel(cards.getTranslations().get(i) + ":");
-                questionPanel.add(translation);
-            }
+            JLabel specificWord = new JLabel(words.get(i) + ":");
+            questionPanel.add(specificWord);
+
             JTextField getGuess = new JTextField(20);
             questionPanel.add(getGuess);
             questionPanel.setBackground(BGCOLOR);
@@ -149,7 +173,7 @@ public class FlashCardApp extends JFrame {
         checkIfCorrect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (cards.quiz(getGuess.getText(), language, cards.getCardsToTest().get(i))) {
+                if (cards.checkIfCorrect(getGuess.getText(), language, cards.getCardsToTest().get(i))) {
                     resultLabel.setText("Previous Guess was Correct!");
                     checkIfCorrect.setVisible(false);
                 } else {
@@ -370,12 +394,12 @@ public class FlashCardApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             clearFrame();
-            if (cards.getAllCards().size() == 0) {
+            cards.resetUntestedCards();
+            if (cards.getCardsToTest().size() == 0) {
                 JLabel noCardsAddedLabel = new JLabel("There are no cards added to the deck");
                 components.add(noCardsAddedLabel);
                 add(noCardsAddedLabel);
             } else {
-                cards.resetUntestedCards();
                 addAllCards();
             }
             pack();
@@ -572,7 +596,8 @@ public class FlashCardApp extends JFrame {
             panel.add(new JLabel("____________________________________________________"));
             JLabel previousGuessesLabel = new JLabel("All previous guesses per word:");
             panel.add(previousGuessesLabel);
-            for (FlashCard flashCard: cards.getAllCards()) {
+            cards.resetUntestedCards();
+            for (FlashCard flashCard: cards.getCardsToTest()) {
                 String guessList = flashCard.getEnglishWord() + ": ";
                 for (String guess: flashCard.getPastGuesses()) {
                     guessList = guessList + guess + ", ";

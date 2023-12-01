@@ -25,14 +25,16 @@ public class CardDeck implements Writable {
         numCorrect = 0;
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, EventLog
     // EFFECTS: adds the given card to the list of flashcards (allCards) in the order of addition.
     public void addCard(FlashCard card) {
         allCards.add(card);
+        EventLog.getInstance().logEvent(new Event("The card for '" + card.getEnglishWord() + "' was added to the deck of cards."));
     }
 
     // EFFECTS: returns all the flashcards that have been added to the deck of flashcards
     public List<FlashCard> getAllCards() {
+        EventLog.getInstance().logEvent(new Event("All cards were displayed."));
         return allCards;
     }
 
@@ -51,10 +53,11 @@ public class CardDeck implements Writable {
         return numTested;
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, EventLog
     // EFFECTS: Returns a list of all the English words of the flashcards all the cards in this deck in the order
     //          they were added
     public ArrayList<String> getEnglishWords() {
+        EventLog.getInstance().logEvent(new Event("Quizzed on English words."));
         ArrayList<String> englishWords = new ArrayList<>();
         for (FlashCard card: cardsToTest) {
             englishWords.add(card.getEnglishWord());
@@ -62,10 +65,11 @@ public class CardDeck implements Writable {
         return englishWords;
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, EventLog
     // EFFECTS: Returns a list of all the translated words of the flashcards all the cards in this deck in the order
     //          they were added
     public ArrayList<String> getTranslations() {
+        EventLog.getInstance().logEvent(new Event("Quizzed on translations."));
         ArrayList<String> translations = new ArrayList<>();
         for (FlashCard card: cardsToTest) {
             translations.add(card.getTranslation());
@@ -80,7 +84,7 @@ public class CardDeck implements Writable {
     //          If the given language is "Translation," then checks if it is equal to the English word.
     //          If the guess is correct, then increases numCorrect (number of correct cards) by 1.
     //          Increases numTested (number of cards tested) by 1.
-    public boolean quiz(String guess, String language, FlashCard fc) {
+    public boolean checkIfCorrect(String guess, String language, FlashCard fc) {
         fc.addToPastGuesses(guess);
         if (language.equals("Translation")) {
             if (guess.equals(fc.getEnglishWord())) {
@@ -103,7 +107,7 @@ public class CardDeck implements Writable {
         }
     }
 
-    // MODIFIES: this
+    // MODIFIES: this, EventLog
     // EFFECTS: Sets cardsToTest to be the cards where the part of speech matches the given part of speech.
     //          If there are no cards in allCards with the same partOfSpeech, returns false. Else, returns true.
     public boolean filterByPartOfSpeech(String partOfSpeech) {
@@ -116,8 +120,10 @@ public class CardDeck implements Writable {
         if (eligibleCards.size() == 0) {
             return false;
         }
+        EventLog.getInstance().logEvent(new Event("Cards were filtered by " + partOfSpeech + "."));
         cardsToTest = eligibleCards;
         return true;
+
     }
 
     // MODIFIES: this

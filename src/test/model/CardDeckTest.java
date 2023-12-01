@@ -210,7 +210,7 @@ class CardDeckTest {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertFalse(testCardDeck.quiz("chat", "English", cardDog));
+        assertFalse(testCardDeck.checkIfCorrect("chat", "English", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
@@ -224,7 +224,7 @@ class CardDeckTest {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("chien", "English", cardDog));
+        assertTrue(testCardDeck.checkIfCorrect("chien", "English", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
@@ -239,7 +239,7 @@ class CardDeckTest {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("chien", "English", cardDog));
+        assertTrue(testCardDeck.checkIfCorrect("chien", "English", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
@@ -253,7 +253,7 @@ class CardDeckTest {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", cardDog));
+        assertFalse(testCardDeck.checkIfCorrect("chicken", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
@@ -267,7 +267,7 @@ class CardDeckTest {
         testCardDeck.addCard(cardDog);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("dog", "Translation", cardDog));
+        assertTrue(testCardDeck.checkIfCorrect("dog", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
@@ -282,11 +282,11 @@ class CardDeckTest {
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("dog", "Translation", cardDog));
+        assertTrue(testCardDeck.checkIfCorrect("dog", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
-        assertTrue(testCardDeck.quiz("cat", "Translation", cardCat));
+        assertTrue(testCardDeck.checkIfCorrect("cat", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(2, testCardDeck.getNumCorrect());
 
@@ -305,11 +305,11 @@ class CardDeckTest {
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", cardDog));
+        assertFalse(testCardDeck.checkIfCorrect("chicken", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
-        assertFalse(testCardDeck.quiz("potato", "Translation", cardCat));
+        assertFalse(testCardDeck.checkIfCorrect("potato", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
@@ -329,11 +329,11 @@ class CardDeckTest {
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", cardDog));
+        assertFalse(testCardDeck.checkIfCorrect("chicken", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(0, testCardDeck.getNumCorrect());
 
-        assertTrue(testCardDeck.quiz("cat", "Translation", cardCat));
+        assertTrue(testCardDeck.checkIfCorrect("cat", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
@@ -352,11 +352,11 @@ class CardDeckTest {
         testCardDeck.addCard(cardCat);
         testCardDeck.resetUntestedCards();
 
-        assertTrue(testCardDeck.quiz("dog", "Translation", cardDog));
+        assertTrue(testCardDeck.checkIfCorrect("dog", "Translation", cardDog));
         assertEquals(1, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
-        assertFalse(testCardDeck.quiz("chicken", "Translation", cardCat));
+        assertFalse(testCardDeck.checkIfCorrect("chicken", "Translation", cardCat));
         assertEquals(2, testCardDeck.getNumTested());
         assertEquals(1, testCardDeck.getNumCorrect());
 
